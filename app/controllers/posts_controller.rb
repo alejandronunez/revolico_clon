@@ -10,42 +10,34 @@ class PostsController < ApplicationController
   def index_front
 
     @parent_category = ParentCategory.find(params['parent_category_id'])
+    
     @title = @parent_category.name
     if(params['category_id'])
       @category = @parent_category.categories.find(params['category_id'])
       @posts = @category.posts.order(:created_at => 'desc')
       @title = @title + ' >> ' + @category.name
-      @action_url = '/home/find/' + params['parent_category_id'].to_s + '/' + params['category_id'].to_s
     else
       @posts = @parent_category.posts.order(:created_at => 'desc')
-      @action_url = '/home/find/' + params['parent_category_id'].to_s
     end
-
-    if(@params_find && @params_find['price_min'])
-      @posts = @posts.where('price >= :price',:price => @params_find['price_min'])
+    params_find = {}
+    params_find = params.require(:post).permit(:price_min,:price_max,:subject) if params[:post]
+    if(params_find['price_min'])
+      @posts = @posts.where('price >= :price',:price => params_find['price_min'])
     end
 
     # byebug
-    if(@params_find && @params_find['price_max'])
-      @posts = @posts.where('price <= :price',:price => @params_find['price_max'])
+    if(params_find['price_max'])
+      @posts = @posts.where('price <= :price',:price => params_find['price_max'])
     end
 
-    if(@params_find && @params_find['subject'])
-      @posts = @posts.where('subject like :subject',:subject => '%'+@params_find['subject']+'%')
-      # byebug
+    if(params_find['subject'])
+      @posts = @posts.where('subject like :subject',:subject => '%'+params_find['subject']+'%')
     end
 
     # @post = [{'price_min': 0,'price_max': 9999, 'subject':'']
     # byebug
   end
 
-  def index_find
-    @params_find = params.require(:post).permit(:price_min,:price_max,:subject)
-    # params['parent_category_id'] = 13
-    self.index_front
-    render :index_front
-
-  end
 
   # GET /posts/1
   # GET /posts/1.json
