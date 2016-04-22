@@ -1,0 +1,48 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.home-view{
+  h2{
+    font-size: 18px;
+    font-weight: bold;
+  }
+  h3{
+    font-size: 14px;
+  }
+}
+ul.post-list{
+  padding-left: 0;
+  li{
+    text-decoration: none;
+    list-style: none;
+    font-size: 14px;
+    background-color: #CCCCCC;
+    p{
+      font-size: 14px;
+      margin: 0;
+      padding-left: 70px;
+      padding-top: 10px;
+    }
+    h2{
+      margin: 0;
+      font-size: 18px;
+      padding-left: 15px;
+      padding-bottom: 10px;
+    }
+    &:nth-child(even){
+      background-color: #aaaaaa;
+    }
+  }
+}
+
+.page-subhead{
+  margin-bottom: 15px;
+}
+.post-view{
+  p{
+    font-size: 18px;
+    &.categories{
+      font-size: 14px;
+    }
+  }
+}

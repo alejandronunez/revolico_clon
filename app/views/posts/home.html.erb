@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>Anuncios <%= link_to t('.new', :default => t("helpers.links.new")),
+                new_post_path,
+                :class => 'btn btn-primary' %></h1>
+</div>
+<div class="home-view">
+  <% parent_categories_array = @parent_categories.collect.to_a %>
+  <% @parent_categories.length.times do |i| %>
+      <% if (i%2 == 0) %>
+          <% if (i != 0) %>
+            </div>
+          <% end %>
+        <div class="col-md-4">
+      <% end %>
+      <% pc = parent_categories_array.fetch(i) %>
+        <h2><%= link_to pc.name + '(' + pc.posts.length.to_s + ')' , :action => 'index_front' , :parent_category_id => pc %></h2>
+          <% pc.categories.each do |c| %>
+            <h3><%= link_to c.name + '(' + c.posts.length.to_s + ')', :action => 'index_front', :parent_category_id => pc, :category_id => c %></h3>
+          <% end %>
+      <% if (i == @parent_categories.length-1) %>
+        </div>
+      <% end %>
+  <% end %>
+</div>

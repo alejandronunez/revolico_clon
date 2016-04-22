@@ -1,0 +1,100 @@
+<%= form_for @post, :html => { :class => "form-horizontal post"} do |f| %>
+
+    <% if @post.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% content_for :Text do %>
+
+        <% end  %>
+    <h2>1. Describe tu anuncio</h2>
+    <div class="row">
+      <div class="control-group col-md-2">
+        <%= f.label :price, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :price, :class => 'form-control' %>
+        </div>
+        <%= error_span(@post[:price]) %>
+      </div>
+
+
+      <div class="control-group col-md-6">
+        <%= f.label :category_id, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.select :category_ids, @categories,{}, {class: 'form-control' , multiple:true} %>
+        </div>
+        <%= error_span(@post[:category_id]) %>
+      </div>
+    </div>
+  <div class="control-group">
+    <%= f.label :subject, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :subject, :class => 'form-control' %>
+    </div>
+    <%= error_span(@post[:subject]) %>
+  </div>
+
+    <div class="control-group">
+      <%= f.label :content, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :content, :class => 'form-control' %>
+      </div>
+      <%= error_span(@post[:content]) %>
+    </div>
+    <h2>2.  Añadir imagenes (opcional)</h2>
+    <ol>
+      <li>
+        <%= f.file_field :image1 %>
+      </li>
+      <li>
+        <%= f.file_field :image2 %>
+      </li>
+      <li>
+        <%= f.file_field :image3 %>
+      </li>
+    </ol>
+    <h2>3.  Datos de contacto</h2>
+    <div class="row">
+      <div class="control-group col-md-4">
+        <%= f.label :email, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :email, :class => 'form-control' %>
+        </div>
+        <%= error_span(@post[:email]) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="control-group col-md-4">
+        <%= f.label :name, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :name, :class => 'form-control' %>
+        </div>
+        <%= error_span(@post[:name]) %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="control-group col-md-4">
+        <%= f.label :phone, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :phone, :class => 'form-control' %>
+        </div>
+        <%= error_span(@post[:phone]) %>
+      </div>
+    </div>
+
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            posts_path, :class => 'btn btn-default' %>
+
+<% end %>

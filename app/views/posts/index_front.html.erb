@@ -1,0 +1,58 @@
+<%- model_class = Post -%>
+<div class="page-header">
+  <h1><%= @title %></h1>
+
+  <%= link_to t('.new', :default => t("helpers.links.new")),
+              new_post_path,
+              :class => 'btn btn-primary' %>
+</div>
+<div class="page-subhead">
+  <%= form_for 'post',  :url => @action_url, :html => { :class => "form-horizontal post" , :multipart => true} do |f| %>
+
+    <div class="row">
+        <div class="control-group col-md-2">
+          <%= f.label :price_min, 'Price min:',:class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :price_min, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="control-group col-md-2">
+          <%= f.label :price_max, 'Price max:',:class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :price_max, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="control-group col-md-6">
+          <%= f.label :subject, 'Subject:',:class => 'control-label' %>
+          <div class="controls">
+            <%= f.text_field :subject, :class => 'form-control' %>
+          </div>
+        </div>
+        <%= f.submit 'Find', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+<ul class="post-list">
+  <% showed = [];
+     @posts.each do |post| %>
+      <% if(!showed.find {|i| i == post.id})
+            showed << post.id
+            link_string = '$' +  post.price.to_s + ': ' + post.subject
+  %>
+    <li>
+      <p><%
+         categories = post.categories.to_a
+         categories.each do |c|
+            if(c.parent_category.id == @parent_category.id)
+                link_title = c.name
+            else
+                link_title = c.parent_category.name + ' >> '+ c.name
+            end
+            %>
+            <%= link_to link_title, :action => 'index_front', :parent_category_id => c.parent_category, :category_id => c  %>,
+        <% end %><p>
+      <h2><%= link_to link_string, post_path(post) %></h2>
+    </li>
+  <%    end
+     end %>
+</ul>
