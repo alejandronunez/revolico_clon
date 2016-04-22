@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   resources :parent_categories
 
   get 'home' => 'posts#home'
-  get 'home/:parent_category_id' => 'posts#index_front'
-  get 'home/:parent_category_id/:category_id' => 'posts#index_front'
-  post 'home/find/:parent_category_id', :to => 'posts#index_find'
-  post 'home/find/:parent_category_id/:category_id', :to => 'posts#index_find'
+  get 'home/:parent_category_id' => 'posts#index_front', :as => 'list_parent_category'
+  get 'home/:parent_category_id/:category_id' => 'posts#index_front', :as => 'list_category'
+  post 'home/:parent_category_id', :to => 'posts#index_front', :as => 'find_parent_category'
+  post 'home/:parent_category_id/:category_id', :to => 'posts#index_front', :as => 'find_parent_category_category'
   resources :posts
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
