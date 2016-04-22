@@ -1,5 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_categories, only: [ :new, :create, :edit, :update, :destroy]
 
   # GET /categories
   # GET /categories.json
@@ -15,7 +16,6 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
-    @parent_categories = ParentCategory.all.collect{|parent_category| [parent_category.name, parent_category.id]}
     # byebug
   end
 
@@ -61,6 +61,11 @@ class CategoriesController < ApplicationController
       format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def set_categories
+    @parent_categories = ParentCategory.all.collect{|parent_category| [parent_category.name, parent_category.id]}
   end
 
   private

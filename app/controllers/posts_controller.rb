@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_categories, only: [:new, :create, :update, :edit]
 
   # GET /posts
   # GET /posts.json
@@ -48,12 +49,10 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @categories = Category.all.collect{|category|[category.parent_category.name + ' >> '+ category.name,category.id]}
   end
 
   # GET /posts/1/edit
   def edit
-    @categories = Category.all.collect{|category|[category.parent_category.name + ' >> '+ category.name,category.id]}
   end
 
   # POST /posts
@@ -97,7 +96,12 @@ class PostsController < ApplicationController
   end
 
   def home
-    @parent_categories = ParentCategory.all
+
+  end
+
+  private
+  def set_categories
+    @categories = Category.all.collect{|category|[category.parent_category.name + ' >> '+ category.name,category.id]}
   end
 
   private

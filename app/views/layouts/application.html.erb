@@ -48,9 +48,21 @@
         <%= link_to 'Revolicom', home_path , :class => 'navbar-brand' %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Link1", "/path1"  %></li>
-            <li><%= link_to "Link2", "/path2"  %></li>
-            <li><%= link_to "Link3", "/path3"  %></li>
+            <% temp = @parent_all_categories.collect.to_a
+               temp.each do |pc| %>
+                <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <%= pc.name %>
+                    <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <%  temp2 = pc.categories.collect.to_a
+                        temp2.each do|c|
+                    %>
+                        <li><%= link_to c.name, list_category_path(:parent_category_id => pc.id,:category_id=>c.id)  %></li>
+                    <%  end %>
+                  </ul>
+                </li>
+            <% end %>
           </ul>
         </div>
       </div>
@@ -65,12 +77,11 @@
         </div>
         <div class="col-lg-3">
           <div class="well sidebar-nav">
-            <h3>Sidebar</h3>
+            <h3>Admin</h3>
             <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to "Parent Categories", parent_categories_path  %></li>
+              <li><%= link_to "Categories", categories_path  %></li>
+              <li><%= link_to "Post", posts_path  %></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

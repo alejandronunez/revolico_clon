@@ -4,8 +4,8 @@
                 :class => 'btn btn-primary' %></h1>
 </div>
 <div class="home-view">
-  <% parent_categories_array = @parent_categories.collect.to_a %>
-  <% @parent_categories.length.times do |i| %>
+  <% parent_categories_array = @parent_all_categories.collect.to_a %>
+  <% @parent_all_categories.length.times do |i| %>
       <% if (i%2 == 0) %>
           <% if (i != 0) %>
             </div>
@@ -17,7 +17,7 @@
           <% pc.categories.each do |c| %>
             <h3><%= link_to c.name + '(' + c.posts.length.to_s + ')', :action => 'index_front', :parent_category_id => pc, :category_id => c %></h3>
           <% end %>
-      <% if (i == @parent_categories.length-1) %>
+      <% if (i == @parent_all_categories.length-1) %>
         </div>
       <% end %>
   <% end %>
